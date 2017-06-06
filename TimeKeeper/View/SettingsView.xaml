@@ -1,0 +1,48 @@
+﻿<Window x:Class="TimeKeeper.View.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        DataContext="{Binding Settings, Source={StaticResource Locator}}" Topmost="{Binding Path=IsTopMost}" Title="Time Keeper Settings" Background="Silver" Height="387" Width="364" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ShowInTaskbar="False">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Skins\expressiondark.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Height="318" Width="338">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="156*" />
+            <ColumnDefinition Width="191*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="69"/>
+            <RowDefinition Height="205*" />
+            <RowDefinition Height="44*" />
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="2" Margin="0,8,0,0" Grid.ColumnSpan="2">
+            <Button Grid.Row="2" IsDefault="True" Height="23" Name="OkButton"  Canvas.Left="80" Canvas.Top="6" Width="75" Click="OkButtonClick">OK</Button>
+            <Button Grid.Row="2"  Name="CancelButton" Width="75" IsCancel="True" Height="22" Canvas.Left="210" Canvas.Top="7">Cancel</Button>
+        </Canvas>
+        <TextBox Margin="0,-3,50,0" Name="timeTextBox" Text="{Binding Path=DefaultStopTime}" HorizontalAlignment="Right" Width="51" Height="25" VerticalAlignment="Top" Grid.Column="1">
+           
+        </TextBox>
+        <Label Margin="0,0,109,0" Name="defaultTimelabel" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="77" Grid.Column="1">Default Time</Label>
+        <CheckBox Content="Is auto run" Height="16" HorizontalAlignment="Left" Margin="12,0,0,0" Name="isAutoRunCheckBox" IsChecked="{Binding Path=AutoStart}" VerticalAlignment="Top" Width="84" />
+     
+        <ComboBox ItemsSource="{Binding Path=ManageProjects.Activities}" DisplayMemberPath="Name" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="20,6,0,0" Name="activitiesComboBox" VerticalAlignment="Top" Width="154" Grid.Column="1" 
+                  SelectedItem="{Binding Path=ManageProjects.AllProjects/Activity}" SelectedValue="{Binding Path=ManageProjects.AllProjects/Activity}" SelectedIndex="0" />
+        
+        <ListBox ItemsSource="{Binding Path=ManageProjects.AllProjects}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Grid.Row="1" Margin="20,48,12,0" Name="allProjectslistBox" Grid.Column="1"  />
+       
+        <ListBox ItemsSource="{Binding Path=ManageProjects.SelectedProjects}" DisplayMemberPath="FullName" Grid.Row="1" Height="157" HorizontalAlignment="Left" Margin="5,48,0,0" Name="selectedProjectslistBox" VerticalAlignment="Top" Width="141" />
+        <Button Content="Delete" Command="{Binding Path=ManageProjects.DeleteProject}"  Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="deleteButton" VerticalAlignment="Top" Width="51" CommandParameter="{Binding Path=SelectedItem, ElementName=selectedProjectslistBox}" />
+        <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="88,6,0,0" Name="addButton" VerticalAlignment="Top" Width="58" Grid.Row="1" Command="{Binding Path=ManageProjects.AddProject}" CommandParameter="{Binding ElementName=allProjectslistBox, Path=SelectedItem}" />
+        <CheckBox Content="Always on top" IsChecked="{Binding Path=IsTopMost, Mode=TwoWay}"  Height="16" HorizontalAlignment="Left" Margin="12,24,0,0" Name="topMostcheckBox" VerticalAlignment="Top" />
+        <Label Content="{Binding Path=UserName}" HorizontalAlignment="Left" Margin="80,47,0,0" Name="userNameValue" Width="143" Grid.ColumnSpan="2" />
+        <Label Content="User Name" HorizontalAlignment="Left" Margin="9,47,0,0" Name="userNameLabel" Width="70" />
+        <Button Command="{Binding Path=ManageProjects.RefreshProject}" Content="Refresh" Height="23" HorizontalAlignment="Right" Margin="0,46,12,0" Name="refreshButton" VerticalAlignment="Top" Width="58" Grid.Column="1" />
+    </Grid>
+</Window>

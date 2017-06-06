@@ -1,0 +1,44 @@
+﻿<Window x:Class="TimeKeeper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow"
+        Height="182" Width="154"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins\expressiondark.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid  Height="145" Width="130" ToolTip="{Binding Path=NotifyMessage}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="66"/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="images\editimekeeper.png"></ImageBrush>
+        </Grid.Background>
+        <Grid.ContextMenu>
+            <ContextMenu BorderThickness="1" Name="gridContexMenu" Background="White">
+                <MenuItem Background="White" Foreground="Black"  Header="Options" Command="{Binding Path=Options}" ></MenuItem>
+                <MenuItem Background="White" Foreground="Black" Header="Exit" Command="{Binding Path=Exit}" ></MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Canvas Grid.Row="0">
+            <TextBlock TextAlignment="Center" FontFamily="Calibry" FontSize="20" Foreground="White" Name= "timerTextBlock" Text="{Binding Path=Timer.DurationTime}" Margin="12,27,25,19" Height="24" Canvas.Left="15" Canvas.Top="0" Width="73">
+            </TextBlock>
+        </Canvas>
+        <ComboBox Name="projectcomboBox" ItemsSource="{Binding Path=Projects}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="FullName"
+                  SelectedValuePath="Name"  IsEnabled="{Binding Path= Timer.IsTimerStopped}" SelectedIndex="0"  Grid.Row="1" Visibility="Visible" Canvas.Left="10" Canvas.Top="24" Margin="11,6,13,10">
+        </ComboBox>
+        <Canvas Grid.Row="2">
+            <Button Name="timerButton" Content="{Binding Path=Caption}" Command="{Binding Path=StartTimer}" 
+                    CommandParameter="{Binding ElementName=projectcomboBox, Path=SelectedItem}" Height="24" Width="64" Grid.Row="2" VerticalAlignment="Top" Canvas.Left="51" Canvas.Top="-4"></Button>
+        </Canvas>
+    </Grid>
+</Window>

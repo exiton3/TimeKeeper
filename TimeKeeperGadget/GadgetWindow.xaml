@@ -1,0 +1,42 @@
+﻿<Window x:Class="TimeKeeperGadget.GadgetWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+     Height="182" Width="154" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+     
+    </Window.Resources>
+   
+    <Grid  Height="145" Width="130">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="themes\expressiondark.xaml"></ResourceDictionary>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="66"/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="images\editimekeeper.png"></ImageBrush>
+        </Grid.Background>
+        <Grid.ContextMenu>
+            <ContextMenu BorderThickness="1" Name="gridContexMenu" Background="LightBlue">
+                <MenuItem Background="LightBlue" Foreground="Blue"  Header="Options" Click="SettingsMenuItem_Click"></MenuItem>
+                <MenuItem Background="LightBlue" Foreground="Blue" Header="Exit" Click="ExitMenuItem_Click"></MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Canvas Grid.Row="0">
+        <TextBlock TextAlignment="Center" FontFamily="Calibry" FontSize="20" Foreground="White" Name= "timerTextBlock" Text="{Binding Path=DurationTime}" Margin="12,27,25,19" Height="24" Canvas.Left="15" Canvas.Top="0" Width="73">           
+        </TextBlock>
+            </Canvas>
+              <ComboBox Name="projectcomboBox" SelectedIndex="0" DisplayMemberPath="Name" Grid.Row="1" Visibility="Visible" Canvas.Left="10" Canvas.Top="24" Margin="11,6,13,10">            
+        </ComboBox>
+        <Canvas Grid.Row="2">
+        <Button Name="timerButton" Click="TimeButton_Click" Height="24" Width="64" Grid.Row="2" VerticalAlignment="Top" Canvas.Left="51" Canvas.Top="-4">Start</Button>
+        </Canvas>
+    </Grid>
+</Window>

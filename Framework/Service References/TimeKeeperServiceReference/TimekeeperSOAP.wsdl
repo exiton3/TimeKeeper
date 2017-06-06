@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:TimekeeperSOAP" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="TimekeeperSOAP" targetNamespace="urn:TimekeeperSOAP" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types xmlns="http://schemas.xmlsoap.org/wsdl/">
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:TimekeeperSOAP">
+      <xsd:complexType name="TimekeeperSOAP">
+        <xsd:all>
+          <xsd:element name="user_projects" type="xsd:string" />
+          <xsd:element name="activities" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="saveStatus">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getProjectsRequest">
+    <wsdl:part name="user_hash" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getProjectsResponse">
+    <wsdl:part name="return" type="tns:TimekeeperSOAP" />
+  </wsdl:message>
+  <wsdl:message name="storeActivityRequest">
+    <wsdl:part name="user_hash" type="xsd:string" />
+    <wsdl:part name="data" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="storeActivityResponse">
+    <wsdl:part name="status" type="tns:saveStatus" />
+  </wsdl:message>
+  <wsdl:portType name="TimekeeperPort">
+    <wsdl:operation name="getProjects">
+      <wsdl:input message="tns:getProjectsRequest" />
+      <wsdl:output message="tns:getProjectsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="storeActivity">
+      <wsdl:input message="tns:storeActivityRequest" />
+      <wsdl:output message="tns:storeActivityResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TimekeeperBinding" type="tns:TimekeeperPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="getProjects">
+      <soap:operation soapAction="urn:Bushism#getProjects" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:TimekeeperSOAP" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:TimekeeperSOAP" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeActivity">
+      <soap:operation soapAction="urn:Bushism#storeActivity" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:TimekeeperSOAP" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:TimekeeperSOAP" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TimekeeperService">
+    <documentation />
+    <wsdl:port name="TimekeeperPort" binding="tns:TimekeeperBinding">
+      <soap:address location="http://timekeeper.amdaris.net/index.php?option=com_timekeeper&amp;task=soap_server" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
